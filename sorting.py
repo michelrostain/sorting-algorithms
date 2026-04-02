@@ -1,60 +1,75 @@
 import random
+import tracemalloc
+import time
+import psutil
+import os
 
-liste = []
-for k in range (101):
-    liste.append(random.randint(0, 100000))
+liste_origine = [random.randint(1, 100000) for _ in range(100000)]
 
-
-def tri_insertion(L):
+def tri_insertion(L, compteur = None):
     N = len(L)
     for n in range (1, N):
         cle = L[n]
         j = n-1
         while j>=0 and L[j] > cle:
+            if compteur is not None:
+                compteur[0]+=1
             L [j+1] = L[j]
             j = j-1
         L[j+1] = cle
 
-def bubble_sort(arr):
+def bubble_sort(arr, compteur=None):
     n = len(arr)
     switch = True
     while switch == True :
         switch = False
         for i in range(0, n-1):
+            if compteur is not None :
+                compteur[0]+=1
             if arr[i] > arr[i+1]:
                 arr[i], arr[i+1] = arr[i+1], arr[i]
                 switch = True
 
-def quick_sort(arr):
+def quick_sort(l, compteur=None):
     # COndition d'arrêt : une liste vide ou un élément déjà trié
-    if len(arr) <=1:
-        return arr
+    if len(l) <=1:
+        return l
     # On choisi notre pivot, par exemple l'élément du milieu
-    pivot = arr[len(arr) // 2]
+    pivot = l[len(l) // 2]
 
-    # On divide la liste la liste en 3 groupes :
-    gauche = [x for x in arr if x< pivot]
-    milieu = [x for x in arr if x == pivot]
-    droite = [x for x in arr if x> pivot]
+    gauche = []
+    milieu = []
+    droite = []
 
+    for x in l:
+        if compteur is not None:
+            compteur[0] += 1        # On compte chaque comparaison
+        if x < pivot:
+            gauche.append(x)
+        elif x == pivot:
+            milieu.append(x)
+        else:
+            droite.append(x)
     # On appelle la fonction sur les sous listes (régner)
-    return quick_sort(gauche) + milieu + quick_sort(droite)
+    return quick_sort(gauche, compteur) + milieu + quick_sort(droite, compteur)
 
 
-def tri_selection(l):
+def tri_selection(l, compteur = None):
     # Mémorisation taille de la liste
     n = len(l)
     # On parcourt la iste de gauche à droite, i gère le nombre de passe sur le reste à trier de la liste 
     for i in range(n-1):
         i_mini = i
-        # Comme la dernière passe a rangé un chiffre (placé à l'index i), on repart de i+1. j gère le nombre d'opérations effectué par passe. Une passe i génère un nombre d'opérations qui est le nombre de chiffre restant àtrier dans chaque passe.
+        # Comme la dernière passe a rangé un chiffre (placé à l'index i), on repart de i+1. j gère le nombre d'opérations effectué par passe. Une passe i génère un nombre d'opérations qui est le nombre de chiffre restant à trier dans chaque passe.
         for j in range (i+1, n):
+            if compteur  is not None :
+                compteur[0] += 1
             if  l[j]<l[i_mini]:
                 i_mini = j
         l[i], l[i_mini] = l[i_mini], l[i]
 
 
-def tri_fusion(l):
+def tri_fusion(l, compteur=None):
     # Condition d'arrêt
     if len(l) <= 1:
         return l
@@ -70,6 +85,8 @@ def tri_fusion(l):
     j = 0
     
     while i < len(gauche) and j < len(droite):
+        if compteur  is not None :
+            compteur[0] += 1
         if gauche[i] <= droite[j]:
             resultat.append(gauche[i])
             i += 1
@@ -77,13 +94,13 @@ def tri_fusion(l):
             resultat.append(droite[j])
             j += 1
     
-    resultat.extend(gauche[i:])
-    resultat.extend(droite[j:])
+    resultat.extend(gauche[i:], compteur)
+    resultat.extend(droite[j:], compteur)
     
     return resultat
 
 
-def tri_tas(l):
+def tri_tas(l, compteur=None):
     n = len(l)
     
     # Fonction de tamisage imbriquée
@@ -94,9 +111,14 @@ def tri_tas(l):
         
         if gauche < taille and l[gauche] > l[plus_grand]:
             plus_grand = gauche
+            if compteur is not None:
+                compteur[0] += 1  
         
         if droite < taille and l[droite] > l[plus_grand]:
             plus_grand = droite
+            if compteur is not None:
+                compteur[0] += 1  
+
         
         if plus_grand != i:
             l[i], l[plus_grand] = l[plus_grand], l[i]
@@ -111,7 +133,7 @@ def tri_tas(l):
         l[0], l[i] = l[i], l[0]
         tamiser(i, 0)    
 
-def tri_peigne(l):
+def tri_peigne(l, compteur=None):
     n = len(l)
     
     # L'écart initial est la taille de la liste
@@ -134,6 +156,10 @@ def tri_peigne(l):
         
         # On parcourt la liste en comparant les éléments séparés par l'écart
         for i in range(0, n - ecart):
+            if compteur is not None:
+                compteur[0] += 1
             if l[i] > l[i + ecart]:
                 l[i], l[i + ecart] = l[i + ecart], l[i]
                 tri_termine = False  # Un échange a eu lieu, on continue
+
+
