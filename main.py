@@ -5,7 +5,7 @@ import psutil
 import os
 
 # Import de toutes les fonctions de tri
-from algos_tri import (
+from sorting import (
     tri_selection,
     tri_insertion,
     bubble_sort,
