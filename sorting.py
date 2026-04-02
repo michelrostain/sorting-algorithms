@@ -76,8 +76,8 @@ def tri_fusion(l, compteur=None):
     
     # Décomposition
     milieu = len(l) // 2
-    gauche = tri_fusion(l[:milieu])
-    droite = tri_fusion(l[milieu:])
+    gauche = tri_fusion(l[:milieu], compteur)
+    droite = tri_fusion(l[milieu:], compteur)
     
     # Fusion directement ici
     resultat = []
@@ -94,8 +94,8 @@ def tri_fusion(l, compteur=None):
             resultat.append(droite[j])
             j += 1
     
-    resultat.extend(gauche[i:], compteur)
-    resultat.extend(droite[j:], compteur)
+    resultat.extend(gauche[i:])
+    resultat.extend(droite[j:])
     
     return resultat
 

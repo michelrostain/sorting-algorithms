@@ -15,7 +15,7 @@ from sorting import (
     tri_peigne
 )
 
-liste_origine = [random.randint(1, 100000) for _ in range(100000)]
+liste_origine = [random.randint(1, 10000) for _ in range(10000)]
 
 def mesurer(nom_algo, fonction, liste, retourne_liste=False):
     processus = psutil.Process(os.getpid())
