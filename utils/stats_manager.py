@@ -1,4 +1,3 @@
-# utils/stats_manager.py
 """
 Sauvegarde et lecture des statistiques de tri dans stats.json.
 Le fichier est créé automatiquement à la racine du projet.

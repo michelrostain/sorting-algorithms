@@ -1,11 +1,3 @@
-# utils/mesure_temps.py
-"""
-Mesure temps + mémoire d'un algo de tri.
-Gère deux sources d'interruption :
-    - Bouton Ctrl+C de l'UI  → stop_flag.set()
-    - Vrai Ctrl+C clavier    → KeyboardInterrupt capturé ici
-"""
-
 import tracemalloc
 import time
 import signal
@@ -25,7 +17,7 @@ def mesurer(
     taille     = len(liste)
     interrompu = False
 
-    # ── Ctrl+C clavier : on lève le stop_flag au lieu de crasher ─────────────
+    #Ctrl+C clavier : on lève le stop_flag au lieu de crasher 
     original_handler = signal.getsignal(signal.SIGINT)
 
     def _handler_ctrlc(sig, frame):
@@ -36,7 +28,7 @@ def mesurer(
 
     signal.signal(signal.SIGINT, _handler_ctrlc)
 
-    # ── Lancement mesure ──────────────────────────────────────────────────────
+    #Lancement mesure
     tracemalloc.start()
     debut = time.perf_counter()
 
@@ -47,7 +39,7 @@ def mesurer(
             fn(liste, compteur)
 
     except KeyboardInterrupt:
-        # Sécurité si le signal n'est pas capturé à temps
+        # Sécurité si le signal n'est pas capturé à temp
         interrompu = True
         if stop_flag:
             stop_flag.set()

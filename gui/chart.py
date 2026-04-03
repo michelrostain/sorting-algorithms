@@ -1,10 +1,3 @@
-# gui/chart.py
-"""
-Gère l'affichage du graphique matplotlib dans la fenêtre Tkinter.
-- afficher_barres_tkinter() : intègre le graphe dans un widget Tkinter
-- afficher_barres_standalone() : version fenêtre séparée (debug)
-"""
-
 import matplotlib
 matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
@@ -15,10 +8,10 @@ from gui.colors import COULEURS_BARRES, COULEUR_ALGO, BG_PANEL, BG_CARD, TXT_MAI
 
 
 def creer_canvas(parent):
-    """
-    Crée et retourne un canvas matplotlib vide intégré dans `parent` (widget Tkinter).
-    Retourne (fig, ax, canvas).
-    """
+    
+    # Crée et retourne un canvas matplotlib vide intégré dans `parent` (widget Tkinter).
+    # Retourne (fig, ax, canvas).
+    
     fig = Figure(figsize=(8, 3), facecolor=BG_PANEL)
     ax  = fig.add_subplot(111)
     _styler_ax(ax, fig)
@@ -31,17 +24,17 @@ def creer_canvas(parent):
 
 
 def dessiner_barres(ax, canvas, liste, nom_algo, interrompu=False):
-    """
-    Dessine les barres de la liste sur l'ax donné et rafraîchit le canvas.
+    
+    # Dessine les barres de la liste sur l'ax donné et rafraîchit le canvas.
 
-    Paramètres
-    ----------
-    ax          : Axes matplotlib
-    canvas      : FigureCanvasTkAgg
-    liste       : list[int|float]  — valeurs à afficher
-    nom_algo    : str              — nom de l'algorithme (pour titre + couleur)
-    interrompu  : bool             — True si Ctrl+C a été déclenché
-    """
+    # Paramètres
+    # ----------
+    # ax          : Axes matplotlib
+    # canvas      : FigureCanvasTkAgg
+    # liste       : list[int|float]  — valeurs à afficher
+    # nom_algo    : str              — nom de l'algorithme (pour titre + couleur)
+    # interrompu  : bool             — True si Ctrl+C a été déclenché
+    
     ax.clear()
     _styler_ax(ax, canvas.figure)
 
@@ -64,7 +57,7 @@ def dessiner_barres(ax, canvas, liste, nom_algo, interrompu=False):
             )
 
     # Titre
-    statut = "  ⚠ Interrompu" if interrompu else ""
+    statut = "  Interrompu" if interrompu else ""
     ax.set_title(
         f"{nom_algo}{statut}",
         color=couleur_base if not interrompu else "#ffca28",
@@ -75,7 +68,7 @@ def dessiner_barres(ax, canvas, liste, nom_algo, interrompu=False):
 
 
 def _styler_ax(ax, fig):
-    """Applique le thème sombre à un axe."""
+    # Applique le thème sombre à un axe.
     ax.set_facecolor(BG_CARD)
     ax.tick_params(colors=TXT_MUTED, labelsize=8)
     ax.set_xlabel("")

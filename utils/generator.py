@@ -1,4 +1,3 @@
-# utils/generateur.py
 """
 Génère des listes aléatoires pour les tests de tri.
 """

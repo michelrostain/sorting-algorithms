@@ -1,4 +1,3 @@
-# gui/interface.py
 import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -46,15 +45,14 @@ class AppTri(tk.Tk):
         self._construire_ui()
         self._generer_liste()
 
-    # ══════════════════════════════════════════════════════════════════════════
+    
     #  UI
-    # ══════════════════════════════════════════════════════════════════════════
 
     def _construire_ui(self):
         # En-tête
         header = tk.Frame(self, bg=BG_PANEL, pady=10)
         header.pack(fill="x")
-        tk.Label(header, text="🏛  Les Papyrus de Héron",
+        tk.Label(header, text=" Les Papyrus de Héron",
                  font=("Georgia", 18, "bold"), fg=ACCENT, bg=BG_PANEL).pack(side="left", padx=18)
         self._lbl_statut = tk.Label(header, text="En attente...",
                                      font=("Consolas", 9), fg=TXT_MUTED, bg=BG_PANEL)
@@ -74,7 +72,7 @@ class AppTri(tk.Tk):
                    buttonbackground=BG_PANEL, relief="flat", bd=0,
                    ).grid(row=0, column=1, padx=(0, 12))
 
-        self._btn_gen = self._btn(ctrl, "⟳  Générer liste", "#4fc3f7", self._generer_liste)
+        self._btn_gen = self._btn(ctrl, " Générer liste", "#4fc3f7", self._generer_liste)
         self._btn_gen.grid(row=0, column=2, padx=6)
 
         tk.Label(ctrl, text="|", fg="#2a3a5c", bg=BG_CARD,
@@ -98,14 +96,14 @@ class AppTri(tk.Tk):
         self._combo.grid(row=0, column=5, padx=(0, 12))
         self._combo.bind("<<ComboboxSelected>>", self._on_algo_change)
 
-        self._btn_run = self._btn(ctrl, "▶  Lancer tri", "#69f0ae", self._lancer_tri)
+        self._btn_run = self._btn(ctrl, "  Lancer tri", "#69f0ae", self._lancer_tri)
         self._btn_run.grid(row=0, column=6, padx=6)
 
-        self._btn_pause = self._btn(ctrl, "⏸  Pause", "#ffca28",
+        self._btn_pause = self._btn(ctrl, "  Pause", "#ffca28",
                                      self._toggle_pause, state="disabled")
         self._btn_pause.grid(row=0, column=7, padx=6)
 
-        self._btn_stop = self._btn(ctrl, "⏹  Ctrl+C", "#ff5252",
+        self._btn_stop = self._btn(ctrl, " Ctrl+C", "#ff5252",
                                     self._interrompre, state="disabled")
         self._btn_stop.grid(row=0, column=8, padx=(6, 0))
 
@@ -155,9 +153,9 @@ class AppTri(tk.Tk):
         self._txt_stats.tag_configure("sep",
             foreground="#2a3a5c",  font=("Consolas", 11))
 
-    # ══════════════════════════════════════════════════════════════════════════
+    
     #  ACTIONS
-    # ══════════════════════════════════════════════════════════════════════════
+
 
     def _generer_liste(self):
         n = self._var_taille.get()
@@ -191,11 +189,11 @@ class AppTri(tk.Tk):
     def _toggle_pause(self):
         if self._pause_flag.is_set():
             self._pause_flag.clear()
-            self._btn_pause.config(text="▶  Reprendre")
-            self._set_statut("⏸ Tri en pause…")
+            self._btn_pause.config(text="I> Reprendre")
+            self._set_statut("II Tri en pause…")
         else:
             self._pause_flag.set()
-            self._btn_pause.config(text="⏸  Pause")
+            self._btn_pause.config(text="II  Pause")
             self._set_statut("Tri repris…")
 
     def _interrompre(self):
@@ -207,14 +205,14 @@ class AppTri(tk.Tk):
         algo = self._var_algo.get()
         if ALGOS.get(algo, {}).get("lent"):
             self._badge.config(
-                text="🐢  Algorithme lent  —  Ctrl+C disponible (bouton ou clavier)",
+                text="  Algorithme lent  —  Ctrl+C disponible (bouton ou clavier)",
                 fg="#ffca28")
         else:
-            self._badge.config(text="⚡  Algorithme rapide", fg="#69f0ae")
+            self._badge.config(text="  Algorithme rapide", fg="#69f0ae")
 
-    # ══════════════════════════════════════════════════════════════════════════
+    
     #  EXÉCUTION (thread)
-    # ══════════════════════════════════════════════════════════════════════════
+   
 
     def _executer_tri(self, nom_algo, cfg):
         copie    = self._liste.copy()
@@ -231,14 +229,14 @@ class AppTri(tk.Tk):
             pause_flag = self._pause_flag if lent else None,
         )
 
-        # ── Sauvegarde dans stats.json ────────────────────────────────────────
+        #  Sauvegarde dans stats.json 
         sauvegarder_stats(nom_algo, stats)
 
         self.after(0, self._afficher_resultats, nom_algo, stats, copie)
 
-    # ══════════════════════════════════════════════════════════════════════════
+   
     #  AFFICHAGE
-    # ══════════════════════════════════════════════════════════════════════════
+   
 
     def _afficher_resultats(self, nom_algo, stats, liste_triee):
         self._progress.stop()
@@ -260,10 +258,10 @@ class AppTri(tk.Tk):
 
         if interrompu:
             self._txt_stats.insert("end",
-                "⚠  Attention ! : Liste non entièrement triée !\n\n", "titre_warn")
+                " Attention ! : Liste non entièrement triée !\n\n", "titre_warn")
         else:
             self._txt_stats.insert("end",
-                "✔  Liste triée avec succès !\n\n", "titre_ok")
+                " Liste triée avec succès !\n\n", "titre_ok")
 
         self._txt_stats.insert("end",
             f"Statistiques avec une liste de {n:,} éléments random créée dans python :\n",
@@ -294,13 +292,12 @@ class AppTri(tk.Tk):
         apercu = liste_triee[:100] if len(liste_triee) > 100 else liste_triee
         dessiner_barres(self._ax, self._canvas, apercu, nom_algo, interrompu)
 
-        statut = "⚠ Interrompu" if interrompu else "✔ Terminé"
+        statut = " Interrompu" if interrompu else " Terminé"
         self._set_statut(f"{statut}  —  {temps:.4f}s  —  {operations:,} opérations")
 
-    # ══════════════════════════════════════════════════════════════════════════
+    
     #  HELPERS
-    # ══════════════════════════════════════════════════════════════════════════
-
+    
     def _btn(self, parent, texte, couleur, cmd, state="normal"):
         return tk.Button(parent, text=texte,
                           font=("Consolas", 10, "bold"),

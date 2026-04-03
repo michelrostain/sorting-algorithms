@@ -1,9 +1,3 @@
-# tests/test_tris.py
-"""
-Tests unitaires pour les 7 algorithmes de tri.
-Lancer avec : python -m pytest tests/ -v
-"""
-
 import random
 import sys
 import os
@@ -14,7 +8,7 @@ from tris.sorting import (
     quick_sort, tri_fusion, tri_tas, tri_peigne,
 )
 
-# ─── Données de test ──────────────────────────────────────────────────────────
+# Données de test
 
 LISTE_VIDE   = []
 LISTE_UN     = [42]
@@ -36,7 +30,7 @@ ALGOS_RETOURNE = [
     ("tri_fusion",  tri_fusion),
 ]
 
-# ─── Tests ────────────────────────────────────────────────────────────────────
+# Tests 
 
 def _tester_en_place(fn, liste):
     copie = liste.copy()
