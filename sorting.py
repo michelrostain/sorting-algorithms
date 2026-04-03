@@ -1,11 +1,3 @@
-import random
-import tracemalloc
-import time
-import psutil
-import os
-
-liste_origine = [random.randint(1, 100000) for _ in range(100000)]
-
 def tri_insertion(L, compteur = None):
     N = len(L)
     for n in range (1, N):
