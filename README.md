@@ -9,7 +9,6 @@ Pour chaque position i :
 
 On cherche l’indice du plus petit élément dans la partie i à n-1.
 On échange cet élément minimum avec l’élément situé à l’indice i.
-
 En première passe, on place le plus petit élément au début de la liste.  
 En deuxième passe, on place le deuxième plus petit en deuxième position, et ainsi de suite.
 
@@ -23,12 +22,12 @@ Mémoire : \(O(1)\), car le tri se fait en place (uniquement des échanges dans 
 Toujours choisir **le plus petit élément restant** et le placer à sa **prochaine position** dans l’ordre croissant.
 
 #### Stats   
-Algorithme  : Tri par sélection
-Opérations  : 49,995,000
-Temps       : 38.408551 secondes
-Mémoire     : 0.61 Ko (actuelle)
-Mémoire     : 41.66 Ko (pic)
-CPU         : 0.0 %   
+Algorithme  : Tri par sélection   
+Opérations  : 49,995,000   
+Temps       : 38.408551 secondes   
+Mémoire     : 0.61 Ko (actuelle)   
+Mémoire     : 41.66 Ko (pic)   
+CPU         : 0.0 %      
 
 
 ### Tri à bulles
@@ -51,12 +50,12 @@ Mémoire : \(O(1)\), car le tri se fait en place (uniquement des échanges dans 
 On compare sans cesse les **paires voisines** et on échange quand c’est mal ordonné, ce qui fait remonter petit à petit les plus grands éléments vers la fin, comme des bulles qui montent à la surface.
 
 #### Stats   
-Algorithme  : Bubble sort
-Opérations  : 99,430,056
-Temps       : 139.452754 secondes
-Mémoire     : 0.12 Ko (actuelle)
-Mémoire     : 41.33 Ko (pic)
-CPU         : 0.0 %
+Algorithme  : Bubble sort   
+Opérations  : 99,430,056   
+Temps       : 139.452754 secondes   
+Mémoire     : 0.12 Ko (actuelle)   
+Mémoire     : 41.33 Ko (pic)   
+CPU         : 0.0 %   
 
 
 ### Tri par insertion
@@ -82,23 +81,23 @@ C’est comme trier des **cartes dans la main** :
 on prend une nouvelle carte, on décale celles qui sont plus grandes, puis on insère la carte au bon endroit dans le paquet déjà rangé.
 
 #### Stats   
-Algorithme  : Tri par insertion
-Opérations  : 24,919,413
-Temps       : 33.736267 secondes
-Mémoire     : 0.12 Ko (actuelle)
-Mémoire     : 41.33 Ko (pic)
-CPU         : 0.0 %
+Algorithme  : Tri par insertion   
+Opérations  : 24,919,413   
+Temps       : 33.736267 secondes   
+Mémoire     : 0.12 Ko (actuelle)   
+Mémoire     : 41.33 Ko (pic)   
+CPU         : 0.0 %   
 
 
 ### Tri fusion   
 Le tri à fusion de N éléments décompose un liste en plusieurs sous liste de taille N. le premier tri rassemble les éléments N deux par deux, puis sont rangés l'un par rapport à  l'autre dans l'ordre. Ensuite les sous liste ainsi composées d'éléments triés sont comparées les unes avec les autres, en commençant par leur élément de tête. Le chiffrele plus petit est ajouté à la nouvelle liste, le chiffre le plus grand reste dans sa sous liste pour être comparé au reste, jusqu'à ce qu'il tombe sur un chiffre plus grand.
 
 Statistiques avec une liste de 10000 éléments random créée dans python : 
-Algorithme  : Tri par fusion
-Opérations  : 120,354
-Temps       : 0.203198 secondes
-Mémoire     : 1.16 Ko (actuelle)
-Mémoire     : 166.09 Ko (pic)
+Algorithme  : Tri par fusion   
+Opérations  : 120,354   
+Temps       : 0.203198 secondes   
+Mémoire     : 1.16 Ko (actuelle)   
+Mémoire     : 166.09 Ko (pic)   
 
 
 ### Tri rapide
@@ -121,12 +120,12 @@ Le tri se fait dans l'arboresence.
 Complexité : N log N. Pas de pire cas.
 
 Statistiques avec une liste de 10000 éléments random créée dans python : 
-Algorithme  : Tri par tas
-Opérations  : 166,599
-Temps       : 0.190436 secondes
-Mémoire     : 0.39 Ko (actuelle)
-Mémoire     : 41.61 Ko (pic)
-CPU         : 0.0 %
+Algorithme  : Tri par tas   
+Opérations  : 166,599   
+Temps       : 0.190436 secondes   
+Mémoire     : 0.39 Ko (actuelle)   
+Mémoire     : 41.61 Ko (pic)   
+CPU         : 0.0 %   
 
 
 ### Tri à peigne
@@ -135,12 +134,12 @@ La complexité varie en fonction du facteur de réduction approprié.Celui est o
 Le pire cas (une liste trié inversée) mène la complexité à O(N²), mais pas autant q'un tri à bulle car les coeff permet de limiter le nombre d'opération.
 
 Statistiques avec une liste de 10000 éléments random créée dans python : 
-Algorithme  : Tri à peigne
-Opérations  : 326,734
-Temps       : 0.523580 secondes
-Mémoire     : 0.12 Ko (actuelle)
-Mémoire     : 41.33 Ko (pic)
-CPU         : 0.0 %
+Algorithme  : Tri à peigne   
+Opérations  : 326,734    
+Temps       : 0.523580 secondes   
+Mémoire     : 0.12 Ko (actuelle)   
+Mémoire     : 41.33 Ko (pic)   
+CPU         : 0.0 %   
 
 
 
