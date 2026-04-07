@@ -1,8 +1,8 @@
-# main.py
 import sys
 import os
 
-# Ancre Python à la racine du projet
+# Permet d'importer les modules locaux quelle que soit
+# la façon dont le script est lancé.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from gui.interface import lancer_interface

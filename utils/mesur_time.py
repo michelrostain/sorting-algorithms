@@ -1,66 +1,73 @@
-import tracemalloc
+# Mesure du temps d'exécution et de la mémoire (tracemalloc).
+
+# La fonction `mesurer` est compatible avec :
+#   - les algos rapides  (stop_flag=None, pause_flag=None)
+#   - les algos lents    (reçoivent stop_flag + pause_flag en kwargs)
+
 import time
-import signal
+import tracemalloc
 import threading
-from typing import Callable
 
 
 def mesurer(
-    fn:         Callable,
-    liste:      list,
-    compteur:   list,
-    retourne:   bool             = False,
-    stop_flag:  threading.Event  = None,
-    pause_flag: threading.Event  = None,
+    fn,
+    liste: list,
+    compteur: list,
+    retourne: bool = False,
+    stop_flag:  threading.Event | None = None,
+    pause_flag: threading.Event | None = None,
 ) -> dict:
+    """
+    Exécute `fn` sur `liste` en mesurant :
+      - le temps écoulé (time.perf_counter)
+      - la mémoire courante et le pic (tracemalloc)
+      - le nombre d'opérations (via `compteur[0]`)
 
-    taille     = len(liste)
-    interrompu = False
+    Parameters
+    ----------
+    fn          : callable  – fonction de tri
+    liste       : list      – liste à trier (modifiée en place OU retournée)
+    compteur    : list[int] – compteur[0] incrémenté par l'algo
+    retourne    : bool      – True si fn retourne la liste triée
+    stop_flag   : Event     – positionné pour interrompre les algos lents
+    pause_flag  : Event     – effacé pour mettre en pause les algos lents
 
-    #Ctrl+C clavier : on lève le stop_flag au lieu de crasher 
-    original_handler = signal.getsignal(signal.SIGINT)
-
-    def _handler_ctrlc(sig, frame):
-        if stop_flag:
-            stop_flag.set()
-        if pause_flag:
-            pause_flag.set()   # débloque si en pause
-
-    signal.signal(signal.SIGINT, _handler_ctrlc)
-
-    #Lancement mesure
+    Returns
+    -------
+    dict avec clés : taille, operations, temps_sec, memoire_ko, pic_ko, interrompu
+    """
     tracemalloc.start()
     debut = time.perf_counter()
+    interrompu = False
 
     try:
-        if retourne:
-            liste[:] = fn(liste, compteur)
-        else:
-            fn(liste, compteur)
+        kwargs: dict = {}
+        if stop_flag  is not None:
+            kwargs["stop_flag"]  = stop_flag
+        if pause_flag is not None:
+            kwargs["pause_flag"] = pause_flag
+
+        resultat = fn(liste, compteur, **kwargs)
+
+        if retourne and resultat is not None:
+            liste[:] = resultat
+
+        # Vérification : l'algo a-t-il été interrompu ?
+        if stop_flag is not None and stop_flag.is_set():
+            interrompu = True
 
     except KeyboardInterrupt:
-        # Sécurité si le signal n'est pas capturé à temp
         interrompu = True
-        if stop_flag:
-            stop_flag.set()
-
-    finally:
-        # Restaure le handler original dans tous les cas
-        signal.signal(signal.SIGINT, original_handler)
 
     fin = time.perf_counter()
-    mem_actuelle, mem_pic = tracemalloc.get_traced_memory()
+    current, peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
 
-    # Vérifie aussi le flag (bouton UI ou signal)
-    if stop_flag and stop_flag.is_set():
-        interrompu = True
-
     return {
+        "taille"     : len(liste),
         "operations" : compteur[0],
         "temps_sec"  : fin - debut,
-        "memoire_ko" : mem_actuelle / 1024,
-        "pic_ko"     : mem_pic / 1024,
-        "taille"     : taille,
+        "memoire_ko" : current / 1024,
+        "pic_ko"     : peak    / 1024,
         "interrompu" : interrompu,
     }

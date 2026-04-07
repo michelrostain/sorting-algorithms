@@ -1,0 +1,62 @@
+[
+  {
+    "date": "2026-04-07 03:33:35",
+    "algorithme": "Tri à bulles",
+    "taille": 10000,
+    "operations": 3640994,
+    "temps_sec": 17.046568800054956,
+    "memoire_ko": 0.1484375,
+    "pic_ko": 0.47265625,
+    "interrompu": true
+  },
+  {
+    "date": "2026-04-07 04:21:22",
+    "algorithme": "Tri à bulles",
+    "taille": 60,
+    "operations": 1742,
+    "temps_sec": 0.001565599988680333,
+    "memoire_ko": 0.1484375,
+    "pic_ko": 0.3515625,
+    "interrompu": false
+  },
+  {
+    "date": "2026-04-07 04:21:47",
+    "algorithme": "Tri à bulles",
+    "taille": 60,
+    "operations": 1742,
+    "temps_sec": 0.0015507999924011528,
+    "memoire_ko": 0.1484375,
+    "pic_ko": 0.3515625,
+    "interrompu": false
+  },
+  {
+    "date": "2026-04-07 04:21:49",
+    "algorithme": "Tri à bulles",
+    "taille": 60,
+    "operations": 1742,
+    "temps_sec": 0.0015708000282756984,
+    "memoire_ko": 0.1484375,
+    "pic_ko": 0.3515625,
+    "interrompu": false
+  },
+  {
+    "date": "2026-04-07 04:22:03",
+    "algorithme": "Tri fusion",
+    "taille": 60,
+    "operations": 279,
+    "temps_sec": 0.0003008999628946185,
+    "memoire_ko": 0.53125,
+    "pic_ko": 1.0625,
+    "interrompu": false
+  },
+  {
+    "date": "2026-04-07 04:24:39",
+    "algorithme": "Tri par insertion",
+    "taille": 10000,
+    "operations": 3312127,
+    "temps_sec": 9.444756300013978,
+    "memoire_ko": 0.1484375,
+    "pic_ko": 0.4140625,
+    "interrompu": true
+  }
+]
